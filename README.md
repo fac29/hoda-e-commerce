@@ -27,6 +27,7 @@ npm install
 
 ```
 PORT=3000
+DB_FILE=./database/db.sqlite
 ```
 4. Enter the following script to create the `dist/index.js` and run the server.
 
@@ -38,6 +39,11 @@ npm start
 ```bash
 npm run dev
 ```
+6. Enter the following script to seed database with example data from /database/seed.sql
+```
+npm run seed
+```
+
 ## Prettier configuaration
 
 Prettier should be installed with other packages upon initialisation and utilise .prettierrc config file in the repo to ensure uniform formatting among contributors. For reference, the configuration is presented below:
