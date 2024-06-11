@@ -29,19 +29,20 @@ npm install
 PORT=3000
 DB_FILE=./database/db.sqlite
 ```
-4. Enter the following script to create the `dist/index.js` and run the server.
+4. [**optional**] Enter the following script to create the build - `dist/index.js` and run the server.
 
 ```bash
 npm start
 ```
-5. Enter the following script to run the server in the development mode.
+5. Enter the following script to seed database with example data from /database/seed.sql
+```
+npm run seed
+```
+
+6. Enter the following script to run the server in the development mode.
 
 ```bash
 npm run dev
-```
-6. Enter the following script to seed database with example data from /database/seed.sql
-```
-npm run seed
 ```
 
 ## Prettier configuaration
