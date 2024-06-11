@@ -1,10 +1,10 @@
 -- This is a file to hold dummy data
 BEGIN;
 
-INSERT INTO users (username, email, password, role) VALUES
-('user1', 'user1@example.com', 'password1', 'customer'),
-('user2', 'user2@example.com', 'password2', 'customer'),
-('admin', 'admin@example.com', 'adminpassword', 'admin');
+INSERT INTO users (username, email, password) VALUES
+('user1', 'user1@example.com', 'password1'),
+('user2', 'user2@example.com', 'password2'),
+('admin', 'admin@example.com', 'adminpassword');
 
 INSERT INTO products (product_name, product_description, category, price, product_image, stock) VALUES
 ('Product 1', 'Description for product 1', 'Category 1', 100, 'product1.jpg', 10),
