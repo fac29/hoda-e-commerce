@@ -26,9 +26,9 @@ INSERT INTO reviews (product_id, author, rating, comment) VALUES
 (2, 'user2', 5, 'Excellent quality.'),
 (3, 'user1', 3, 'Could be better.');
 
-INSERT INTO orders (user_id, product_id, quantity, order_date) VALUES
-(1, 1, 1, '2024-06-01 10:00:00'),
-(2, 2, 2, '2024-06-02 11:00:00'),
-(1, 3, 1, '2024-06-03 12:00:00');
+INSERT INTO orders (order_id, user_id, product_id, quantity, order_date) VALUES
+(1, 1, 1, 1, '2024-06-01 10:00:00'),
+(2, 2, 2, 2, '2024-06-02 11:00:00'),
+(1, 1, 3, 1, '2024-06-03 12:00:00');
 
 COMMIT;

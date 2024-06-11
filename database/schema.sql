@@ -28,11 +28,12 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-  order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER,
   user_id INTEGER,
   product_id INTEGER,
   quantity INTEGER,
   order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (order_id, product_id),
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
