@@ -58,7 +58,7 @@ Prettier should be installed with other packages upon initialisation and utilise
 ```
 ## Database Schema
 
-TBC
+![Database Schema Diagram](resources/schema.png)
 
 ## API Endpoints
 
@@ -67,3 +67,4 @@ TBC
 ## Testing
 
 TBC
+
