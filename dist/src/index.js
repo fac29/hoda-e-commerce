@@ -15,14 +15,3 @@ app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 const { createProduct } = require('../model/product');
-// Example usage
-const newProduct = {
-    product_name: 'Example Product',
-    product_description: 'This is an example product.',
-    category: 'Example Category',
-    price: 100,
-    product_image: 'example_image.jpg',
-    stock: 50,
-};
-createProduct(newProduct);
-console.log('New product created.');
