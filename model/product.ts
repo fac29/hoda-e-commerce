@@ -62,7 +62,7 @@ SELECT
 WHERE products.product_name = ?
 `);
 export function getProductByName(name: string) {
-    return select_product_by_name(name);
+    return select_product_by_name('To Kill a Mockingbird');
 }
 
 // export function getProductByDescription() {}
