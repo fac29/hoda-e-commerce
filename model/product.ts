@@ -30,9 +30,8 @@ FROM products
 export function listProductsAll(): Products {
     return select_products.all();
 }
-/* Test for getProductsAll - get an array of all the product objects.
- console.log(getProductsAll());
-*/
+// Test for getProductsAll - get an array of all the product objects.
+//console.log(listProductsAll());
 
 const select_product_by_id = db.prepare(
     `
@@ -52,9 +51,8 @@ WHERE products.product_id = ?
 export function getProductByID(id: number): Product | undefined {
     return select_product_by_id.get(id);
 }
-/* Test for geProductByID - where you can get a product via a products'id (1 - 12)
- console.log(getProductByName(10));
-*/
+// Test for geProductByID - where you can get a product via a products'id (1 - 12)
+// console.log(getProductByName(10));
 
 const select_product_by_name = db.prepare(`
 SELECT 
@@ -107,6 +105,5 @@ you can seach by any word in
 - description
 -author
 -category
-
-console.log(getProductBySearchTerm('The'));
 */
+//console.log(getProductBySearchTerm('The'));
