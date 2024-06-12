@@ -30,7 +30,7 @@ FROM products
 export function listProductsAll(): Products {
     return select_products.all();
 }
-/* Test for getProductsAll 
+/* Test for getProductsAll - get an array of all the product objects.
  console.log(getProductsAll());
 */
 
@@ -52,7 +52,7 @@ WHERE products.product_id = ?
 export function getProductByID(id: number): Product | undefined {
     return select_product_by_id.get(id);
 }
-/* Test for geProductByID 
+/* Test for geProductByID - where you can get a product via a products'id (1 - 12)
  console.log(getProductByName(10));
 */
 
@@ -73,7 +73,7 @@ export function getProductByName(name: string): Product | undefined {
     return select_product_by_name.get(name);
 }
 
-//Test for geProductByName - a products' name
+//Test for geProductByName - where you can get a product via a products'(book) name
 //console.log(getProductByName('To Kill a Mockingbird'));
 
 const search_products = db.prepare(`
@@ -101,4 +101,12 @@ export function getProductBySearchTerm(
     );
 }
 
+/*test for getProductsBySeatchTerm
+you can seach by any word in
+- name
+- description
+-author
+-category
+
 console.log(getProductBySearchTerm('The'));
+*/
