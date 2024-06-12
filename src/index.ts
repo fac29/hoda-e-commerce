@@ -1,17 +1,19 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import { listProductsAll } from '../model/product';
+import { setupRoutes } from './routes/router';
+import { getProducts } from './controller/controller';
+import { getID, getName } from './controller/controller';
+import { getProductByName } from '../model/product';
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('E-Commerce App: Express + TypeScript Server');
-});
-
+//setupRoutes();
+app.get('/get-products', getProducts);
+app.get('/get-products/:id', getID);
+// app.get('/get-products/:name', getName);
+console.log(getProductByName);
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
-
-console.log(`LOOK HEREE: ${listProductsAll}`);

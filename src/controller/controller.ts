@@ -1,37 +1,32 @@
 import { Request, Response } from 'express';
-import {listProductsAll} from '../../model/product'
-// export async function getProductByID(req: Request, res: Response) {
-//     try {
-//         //TODO....create a function which will fetch product data from sql
-//         const product = fetchProduct(req.params.id);
-//         //send parsed data as a response
-//         res.json(product);
-//     } catch (error: any) {
-//         res.status(500).send(error.toString());
-//     }
-// }
-
+import { getProductByName, listProductsAll } from '../../model/product';
+import { getProductByID } from '../../model/product';
 export function getProducts(req: Request, res: Response) {
     try {
-        const products = listProductsAll;
-        console.log(typeof products)
+        res.status(200).send(listProductsAll());
     } catch (error: any) {
-        res.status(500).send(error.toString);
+        res.status(500).send(error.toString());
     }
 }
 
-export function checkout(req: Request, res: Response) {
+export function getID(req: Request, res: Response) {
     try {
-        //do something
-    } catch {
-        //do something else
+        const id = req.params.id;
+        const product = getProductByID(parseInt(id));
+        res.status(200).send(product);
+    } catch (error: any) {
+        res.status(500).send(error.toString());
     }
 }
 
-export function login(req: Request, res: Response) {
+//I need to
+export function getName(req: Request, res: Response) {
     try {
-        //do something
-    } catch {
-        //do something else
+        const name = req.params.name;
+        const product = getProductByName(name);
+        const encodedProduct = encodeURIComponent(name);
+        res.status(200).send(product);
+    } catch (error: any) {
+        res.status(500).send(error.toString());
     }
 }
