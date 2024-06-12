@@ -1,6 +1,16 @@
 -- This is a file to hold dummy data
 BEGIN;
 
+-- Clear existing data
+DELETE FROM orders;
+DELETE FROM reviews;
+DELETE FROM products;
+DELETE FROM users;
+
+-- Reset auto-increment counters
+DELETE FROM sqlite_sequence WHERE name IN ('orders', 'reviews', 'products', 'users');
+
+-- Insert new data
 INSERT INTO users (username, email, password) VALUES
 ('user1', 'user1@example.com', 'password1'),
 ('user2', 'user2@example.com', 'password2'),
@@ -20,7 +30,6 @@ INSERT INTO products (product_name, product_author, product_description, categor
 ('Lessons in Chemistry', 'Bonnie Garmus', 'A novel by Bonnie Garmus about a woman scientist in the 1960s.', 'Historical Fiction', 1499, 'lessons_in_chemistry.jpg', 25),
 ('If This Is a Man', 'Primo Levi', 'A book by Primo Levi about his experiences in Auschwitz.', 'Memoir', 1599, 'if_this_is_a_man.jpg', 15);
 
-
 INSERT INTO reviews (product_id, author, rating, comment) VALUES
 (1, 'user1', 4, 'Great product!'),
 (2, 'user2', 5, 'Excellent quality.'),
@@ -29,6 +38,6 @@ INSERT INTO reviews (product_id, author, rating, comment) VALUES
 INSERT INTO orders (order_id, user_id, product_id, quantity, order_date) VALUES
 (1, 1, 1, 1, '2024-06-01 10:00:00'),
 (2, 2, 2, 2, '2024-06-02 11:00:00'),
-(1, 1, 3, 1, '2024-06-03 12:00:00');
+(2, 1, 3, 1, '2024-06-03 12:00:00');
 
 COMMIT;
