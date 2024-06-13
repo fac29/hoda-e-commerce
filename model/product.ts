@@ -1,4 +1,4 @@
-//import { db } from '../database/db';
+//import { db } from 'database/db.sqlite';
 const Database = require('better-sqlite3');
 const db = new Database('database/db.sqlite');
 
@@ -106,4 +106,4 @@ you can seach by any word in
 -author
 -category
 */
-//console.log(getProductBySearchTerm('The'));
+console.log(getProductBySearchTerm('The'));
