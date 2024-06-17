@@ -28,14 +28,19 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-  order_id INTEGER,
+  order_id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER,
+  order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER,
   product_id INTEGER,
   quantity INTEGER,
-  order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (order_id, product_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id),
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
+  FOREIGN KEY (product_id) REFERENCES products(product_id),
+  FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
 
 COMMIT;
