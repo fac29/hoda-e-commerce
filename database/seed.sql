@@ -31,9 +31,37 @@ INSERT INTO products (product_name, product_author, product_description, categor
 ('If This Is a Man', 'Primo Levi', 'A book by Primo Levi about his experiences in Auschwitz.', 'Memoir', 1599, 'if_this_is_a_man.jpg', 15);
 
 INSERT INTO reviews (product_id, author, rating, comment) VALUES
-(1, 'user1', 4, 'Great product!'),
-(2, 'user2', 5, 'Excellent quality.'),
-(3, 'user1', 3, 'Could be better.');
+(1, 'user1', 4, 'Loved the Jazz Age vibe, but where was the jazz?'),
+(1, 'user2', 5, 'Gatsby is my spirit animal.'),
+(1, 'user3', 3, 'Not enough green lights.'),
+(2, 'user2', 5, 'Atticus Finch for President!'),
+(2, 'user3', 4, 'The courtroom drama was intense!'),
+(2, 'user4', 5, 'I want to be Scout when I grow up.'),
+(3, 'user1', 3, 'Too real. Needed more happy moments.'),
+(3, 'user3', 4, 'Big Brother is always watching, and so am I!'),
+(3, 'user4', 2, 'A bit too dystopian for my taste.'),
+(4, 'user1', 5, 'Mr. Darcy can be my brooding hero any day.'),
+(4, 'user2', 4, 'Marriage and manners, oh my!'),
+(5, 'user2', 4, 'Holden Caulfield needs a hug.'),
+(5, 'user4', 5, 'Rebel without a cause... or a clue.'),
+(6, 'user3', 4, 'Call me Ishmael. Just kidding, call me impressed.'),
+(6, 'user4', 5, 'Whale, whale, whale, what do we have here?'),
+(7, 'user1', 5, 'Tolstoy makes war sound almost fun.'),
+(7, 'user2', 4, 'So many characters, so little time.'),
+(8, 'user2', 4, 'Odysseus, the original travel blogger.'),
+(8, 'user3', 5, 'Epic adventures and epic poems. What’s not to love?'),
+(8, 'user4', 4, 'Greek mythology at its best!'),
+(9, 'user1', 5, 'Dostoevsky dives deep into the human psyche.'),
+(9, 'user2', 4, 'Dark, but in a good way.'),
+(9, 'user3', 5, 'Crime and punishment, indeed.'),
+(10, 'user3', 5, 'Bilbo Baggins is my hero.'),
+(10, 'user4', 4, 'An unexpected journey, indeed.'),
+(11, 'user1', 4, 'Science and sass - what’s not to love?'),
+(11, 'user2', 5, 'Elizabeth Zott is a force of nature.'),
+(11, 'user4', 3, 'Interesting, but a bit slow in parts.'),
+(12, 'user3', 5, 'A haunting memoir that stays with you.'),
+(12, 'user1', 4, 'Powerful and poignant.'),
+(12, 'user2', 5, 'A must-read for everyone.');
 
 INSERT INTO orders (order_id, user_id, order_date) VALUES
 (1, 1, '2024-03-01 10:24:31'),
