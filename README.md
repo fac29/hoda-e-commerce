@@ -1,6 +1,6 @@
 # E-Commerce Website -- Backend
 
-This is a repo that holds backend functionality for an E-Commerce website created by Halima, Oskar, Diana and Alex.
+This is a repo that holds backend functionality for an E-Commerce website created by Halimah, Oskar, Diana and Alex.
 
 ## Installation and initialisation
 
