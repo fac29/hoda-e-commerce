@@ -20,3 +20,11 @@ export function createUser(
 ) {
     return insert_user.run({ username, email, hashed_password });
 }
+
+const select_user_by_email = db.prepare(`
+    SELECT user_id, email, hashed_password, username FROM users WHERE email = ?
+  `);
+
+export function getUserByEmail(email: User['email']) {
+    return select_user_by_email.get(email);
+}
