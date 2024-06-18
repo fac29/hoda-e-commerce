@@ -27,6 +27,20 @@ type ProductWithReviews = Product & {
 type Products = Product[];
 type ProductsWithReviews = ProductWithReviews[];
 
+type OrderItem = {
+    product_id: number;
+    quantity: number;
+};
+
+type Order = {
+    user_id: number;
+    products: OrderItem[];
+};
+
+type OrderId = {
+    order_id: number;
+};
+
 const select_products = db.prepare(/*sql*/ `
 SELECT
     p.product_id,
@@ -182,3 +196,52 @@ you can seach by any word in
 -category
 */
 // console.log(getProductBySearchTerm('The'));
+
+const add_new_order = db.prepare(/* sql */ `
+    INSERT INTO orders (user_id) VALUES (?)
+    RETURNING order_id
+`);
+
+const add_order_item = db.prepare(/* sql */ `
+    INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)
+    RETURNING order_id, product_id, quantity
+`);
+
+const get_product_from_order = db.prepare(/* sql */ `
+   SELECT p.product_name, oi.quantity, oi.price
+   FROM products p
+   LEFT JOIN order_items oi ON oi.product_id = p.product_id
+   WHERE p.product_id = ?
+`);
+
+export function addNewOrder({ user_id, products }: Order) {
+    const orderId: OrderId = add_new_order.get(user_id);
+    const orders: Order[] = products.map((product) => {
+        return add_order_item.get(
+            orderId.order_id,
+            product.product_id,
+            product.quantity
+        );
+    });
+
+    console.log(JSON.stringify(orders));
+    return `Order #${orderId.order_id} successfully submitted.`;
+}
+
+// Test object to check the addNewOrder function works
+// This mimics what will be passed from the frontend - the user_id and array of products ordered
+// which will contain a product_id and quantity
+const newOrder = {
+    user_id: 1,
+    products: [
+        {
+            product_id: 1,
+            quantity: 1,
+        },
+        {
+            product_id: 2,
+            quantity: 1,
+        },
+    ],
+};
+console.log(addNewOrder(newOrder));
