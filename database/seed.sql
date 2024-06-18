@@ -11,7 +11,7 @@ DELETE FROM users;
 DELETE FROM sqlite_sequence WHERE name IN ('orders', 'reviews', 'products', 'users');
 
 -- Insert new data
-INSERT INTO users (username, email, password) VALUES
+INSERT INTO users (username, email, hashed_password) VALUES
 ('user1', 'user1@example.com', 'password1'),
 ('user2', 'user2@example.com', 'password2'),
 ('admin', 'admin@example.com', 'adminpassword');

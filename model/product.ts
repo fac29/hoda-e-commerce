@@ -1,6 +1,6 @@
 //import { db } from 'database/db.sqlite';
 const Database = require('better-sqlite3');
-const db = new Database('database/db.sqlite');
+export const db = new Database('database/db.sqlite');
 
 type Product = {
     product_id: number;
