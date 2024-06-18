@@ -10,14 +10,16 @@ export function getAllProducts(req: Request, res: Response) {
         const searchQuery = req.query.search;
         if (searchQuery) {
             const stringQ = searchQuery.toString();
-            res.status(200).send(getProductBySearchTerm(stringQ));
+            const result = getProductBySearchTerm(stringQ);
+            return res.status(200).json(result);
         }
-        let result = listProductsAll();
-        res.status(200).send(result);
+        const result = listProductsAll();
+        return res.status(200).json(result);
     } catch (error: any) {
-        res.status(500).send(error.toString);
+        return res.status(500).json({ error: error.toString() });
     }
 }
+
 export function getProductID(req: Request, res: Response) {
     try {
         const product = req.params.id;
