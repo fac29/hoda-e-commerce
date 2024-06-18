@@ -51,7 +51,11 @@ GROUP BY p.product_id
 `);
 
 export function listProductsAll(): ProductsWithReviews {
-    return select_products.all();
+    const products = select_products.all();
+    return products.map((product: any) => ({
+        ...product,
+        reviews: JSON.parse(product.reviews),
+    }));
 }
 // Test for getProductsAll - get an array of all the product objects.
 //console.log(listProductsAll());
@@ -82,7 +86,14 @@ GROUP BY p.product_id
     `
 );
 export function getProductByID(id: number): ProductWithReviews | undefined {
-    return select_product_by_id.get(id);
+    const product = select_product_by_id.get(id);
+    if (product) {
+        return {
+            ...product,
+            reviews: JSON.parse(product.reviews),
+        };
+    }
+    return undefined;
 }
 // Test for geProductByID - where you can get a product via a products'id (1 - 12)
 // console.log(getProductByName(10));
@@ -111,7 +122,14 @@ WHERE p.product_name = ?
 GROUP BY p.product_id
 `);
 export function getProductByName(name: string): ProductWithReviews | undefined {
-    return select_product_by_name.get(name);
+    const product = select_product_by_name.get(name);
+    if (product) {
+        return {
+            ...product,
+            reviews: JSON.parse(product.reviews),
+        };
+    }
+    return undefined;
 }
 
 //Test for geProductByName - where you can get a product via a products'(book) name
@@ -144,12 +162,16 @@ GROUP BY p.product_id
 export function getProductBySearchTerm(
     searchTerm: string
 ): ProductsWithReviews | undefined {
-    return search_products.all(
+    const products = search_products.all(
         '%' + searchTerm + '%',
         '%' + searchTerm + '%',
         '%' + searchTerm + '%',
         '%' + searchTerm + '%'
     );
+    return products.map((product: any) => ({
+        ...product,
+        reviews: JSON.parse(product.reviews),
+    }));
 }
 
 /*test for getProductsBySeatchTerm

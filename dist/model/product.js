@@ -27,7 +27,8 @@ LEFT JOIN reviews r ON r.product_id = p.product_id
 GROUP BY p.product_id
 `);
 function listProductsAll() {
-    return select_products.all();
+    const products = select_products.all();
+    return products.map((product) => (Object.assign(Object.assign({}, product), { reviews: JSON.parse(product.reviews) })));
 }
 exports.listProductsAll = listProductsAll;
 // Test for getProductsAll - get an array of all the product objects.
@@ -56,7 +57,11 @@ WHERE p.product_id = ?
 GROUP BY p.product_id
     `);
 function getProductByID(id) {
-    return select_product_by_id.get(id);
+    const product = select_product_by_id.get(id);
+    if (product) {
+        return Object.assign(Object.assign({}, product), { reviews: JSON.parse(product.reviews) });
+    }
+    return undefined;
 }
 exports.getProductByID = getProductByID;
 // Test for geProductByID - where you can get a product via a products'id (1 - 12)
@@ -85,7 +90,11 @@ WHERE p.product_name = ?
 GROUP BY p.product_id
 `);
 function getProductByName(name) {
-    return select_product_by_name.get(name);
+    const product = select_product_by_name.get(name);
+    if (product) {
+        return Object.assign(Object.assign({}, product), { reviews: JSON.parse(product.reviews) });
+    }
+    return undefined;
 }
 exports.getProductByName = getProductByName;
 //Test for geProductByName - where you can get a product via a products'(book) name
@@ -114,7 +123,8 @@ WHERE p.product_description LIKE ? OR p.product_name LIKE ? OR p.product_author 
 GROUP BY p.product_id
 `);
 function getProductBySearchTerm(searchTerm) {
-    return search_products.all('%' + searchTerm + '%', '%' + searchTerm + '%', '%' + searchTerm + '%', '%' + searchTerm + '%');
+    const products = search_products.all('%' + searchTerm + '%', '%' + searchTerm + '%', '%' + searchTerm + '%', '%' + searchTerm + '%');
+    return products.map((product) => (Object.assign(Object.assign({}, product), { reviews: JSON.parse(product.reviews) })));
 }
 exports.getProductBySearchTerm = getProductBySearchTerm;
 /*test for getProductsBySeatchTerm
