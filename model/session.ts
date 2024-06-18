@@ -14,3 +14,16 @@ export function createSession(user_id: number) {
     insert_session.run({ session_id, user_id });
     return session_id;
 }
+
+const select_session = db.prepare(`
+    SELECT session_id, user_id, expires_at
+    FROM sessions WHERE session_id = ?
+  `);
+
+export function getSession(sid: string) {
+    const session = select_session.get(sid); // Retrieve session from the database
+    if (session) {
+        return session; // Ensure a plain object is returned
+    }
+    return null;
+}
