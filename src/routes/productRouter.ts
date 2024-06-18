@@ -6,7 +6,7 @@ const router = require('express').Router();
 
 router.get('/', controllers.getAllProducts);
 router.get('/:id', controllers.getProductID);
-// router.post('/checkout', controllers.checkout);
+router.post('/checkout', controllers.checkout);
 // router.post('/login', controllers.login);
 // router.post('/sign-up', controllers.signup);
 
