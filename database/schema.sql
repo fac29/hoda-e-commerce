@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
-  sessions_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  session_id TEXT PRIMARY KEY,
   user_id INTEGER REFERENCES users(user_id),
   expires_at DATETIME NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
