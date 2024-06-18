@@ -3,6 +3,7 @@ import {
     getProductByID,
     getProductBySearchTerm,
     listProductsAll,
+    addNewOrder,
 } from '../../model/product';
 
 export function getAllProducts(req: Request, res: Response) {
@@ -31,10 +32,10 @@ export function getProductID(req: Request, res: Response) {
     }
 }
 
-export function checkout(req: Request, res: Response) {
+export async function checkout(req: Request, res: Response) {
     try {
-        const order = req.body; // assuming the order details are in the request body
-       // submitOrder(order); // submit the order to the orders table
+        const object = req.body;
+        await addNewOrder(object);
         res.status(200).send('Order complete'); // send a success response
     } catch (error) {
         console.error(error); // log the error

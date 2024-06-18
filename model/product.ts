@@ -234,17 +234,4 @@ export function addNewOrder({ user_id, products }: Order) {
 // Test object to check the addNewOrder function works
 // This mimics what will be passed from the frontend - the user_id and array of products ordered
 // which will contain a product_id and quantity
-const newOrder = {
-    user_id: 1,
-    products: [
-        {
-            product_id: 1,
-            quantity: 1,
-        },
-        {
-            product_id: 2,
-            quantity: 1,
-        },
-    ],
-};
-console.log(addNewOrder(newOrder));
+
