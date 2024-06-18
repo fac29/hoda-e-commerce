@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
   email TEXT UNIQUE,
-  password TEXT
+  hashed_password TEXT
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -41,6 +41,13 @@ CREATE TABLE IF NOT EXISTS order_items (
   quantity INTEGER,
   FOREIGN KEY (product_id) REFERENCES products(product_id),
   FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  session_id TEXT PRIMARY KEY,
+  user_id INTEGER REFERENCES users(user_id),
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 COMMIT;
