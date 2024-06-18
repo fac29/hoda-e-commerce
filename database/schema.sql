@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
   email TEXT UNIQUE,
-  password TEXT
+  hashed_password TEXT
 );
 
 CREATE TABLE IF NOT EXISTS products (
