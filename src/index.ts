@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import productRouter from './routes/productRouter';
-import { createUser } from '../model/user';
+
 const CORS = require('cors');
 
 dotenv.config();
