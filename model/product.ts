@@ -207,23 +207,26 @@ const add_order_item = db.prepare(/* sql */ `
     RETURNING order_id, product_id, quantity
 `);
 
-const get_product_from_order = db.prepare(/* sql */ `
-   SELECT p.product_name, oi.quantity, oi.price
-   FROM products p
-   LEFT JOIN order_items oi ON oi.product_id = p.product_id
-   WHERE p.product_id = ?
+const select_product_from_order = db.prepare(/* sql */ `
+   SELECT product_name, price
+   FROM products
+   WHERE product_id = ?
 `);
 
 export function addNewOrder({ user_id, products }: Order) {
     const orderId: OrderId = add_new_order.get(user_id);
     const orders: Order[] = products.map((product) => {
-        return add_order_item.get(
+        let order = add_order_item.get(
             orderId.order_id,
             product.product_id,
             product.quantity
         );
-    });
 
+        const product_info = select_product_from_order.get(product.product_id);
+
+        order = { ...order, ...product_info };
+        return order;
+    });
     console.log(JSON.stringify(orders));
     return `Order #${orderId.order_id} successfully submitted.`;
 }
