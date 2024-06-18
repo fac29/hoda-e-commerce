@@ -23,10 +23,10 @@ function getProductID(req, res) {
         const product = req.params.id;
         const productId = parseInt(product);
         const result = (0, product_1.getProductByID)(productId);
-        res.status(200).send(result);
+        res.status(200).json(result);
     }
     catch (error) {
-        res.status(500).send(error.toString());
+        res.status(500).json({ error: error.toString() });
     }
 }
 exports.getProductID = getProductID;

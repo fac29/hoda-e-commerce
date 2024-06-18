@@ -25,9 +25,9 @@ export function getProductID(req: Request, res: Response) {
         const product = req.params.id;
         const productId = parseInt(product);
         const result = getProductByID(productId);
-        res.status(200).send(result);
+        res.status(200).json(result);
     } catch (error: any) {
-        res.status(500).send(error.toString());
+        res.status(500).json({ error: error.toString() });
     }
 }
 
