@@ -2,13 +2,15 @@
 BEGIN;
 
 -- Clear existing data
+DELETE FROM sessions;
+DELETE FROM order_items;
 DELETE FROM orders;
 DELETE FROM reviews;
 DELETE FROM products;
 DELETE FROM users;
 
 -- Reset auto-increment counters
-DELETE FROM sqlite_sequence WHERE name IN ('orders', 'reviews', 'products', 'users');
+DELETE FROM sqlite_sequence WHERE name IN ('sessions', 'order_items', 'orders', 'reviews', 'products', 'users');
 
 -- Insert new data
 INSERT INTO users (username, email, hashed_password) VALUES
