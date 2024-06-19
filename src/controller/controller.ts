@@ -5,7 +5,7 @@ import {
     listProductsAll,
     addNewOrder,
 } from '../../model/product';
-import { createUser } from '../../model/user';
+import { createUser, getUserByEmailAndUsername } from '../../model/user';
 import { createSession } from '../../model/session';
 
 const bcyrpt = require('bcrypt');
@@ -48,10 +48,30 @@ export async function checkout(req: Request, res: Response) {
 }
 
 export function login(req: Request, res: Response) {
+    const { email, password, username } = req.body;
+    const user = getUserByEmailAndUsername(email, username);
+    if (!email || !password || !user) {
+        return res.status(400).json({ response: 'Login failed!' });
+    }
     try {
-        //do something
-    } catch {
-        //do something else
+        bcyrpt
+            .compare(password, user.hashed_password)
+            .then((match: boolean) => {
+                if (!match) {
+                    return res.status(400).send('Login failed!');
+                } else {
+                    const session_id = createSession(user.user_id);
+                    res.cookie('sid', session_id, {
+                        signed: true,
+                        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+                        sameSite: 'lax',
+                        httpOnly: true,
+                    });
+                }
+                res.status(200).json({ response: 'Logged in!' });
+            });
+    } catch (error) {
+        res.status(400).json({ error: error });
     }
 }
 
