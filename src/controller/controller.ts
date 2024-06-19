@@ -59,7 +59,7 @@ export function signup(req: Request, res: Response) {
     const { email, password, username } = req.body;
 
     if (!email || !password || !username) {
-        res.status(400).send('Bad input');
+        res.status(400).json({ response: 'Bad input' });
     } else {
         try {
             bcyrpt.hash(password, 12).then((hash: string) => {
@@ -71,7 +71,7 @@ export function signup(req: Request, res: Response) {
                     maxAge: 5 * 60 * 1000,
                     sameSite: 'lax',
                 });
-                res.status(200).send('Cookie Created!');
+                res.status(200).json({ response: 'Cookie Created!' });
             });
         } catch (error) {
             res.status(400).send(error);
