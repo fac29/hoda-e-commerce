@@ -3,6 +3,7 @@ import {
     getProductByID,
     getProductBySearchTerm,
     listProductsAll,
+    addNewOrder,
 } from '../../model/product';
 import { createUser } from '../../model/user';
 import { createSession } from '../../model/session';
@@ -35,11 +36,14 @@ export function getProductID(req: Request, res: Response) {
     }
 }
 
-export function checkout(req: Request, res: Response) {
+export async function checkout(req: Request, res: Response) {
     try {
-        //do something
-    } catch {
-        //do something else
+        const object = req.body;
+        await addNewOrder(object);
+        res.status(200).send('Order complete'); // send a success response
+    } catch (error) {
+        console.error(error); // log the error
+        res.status(500).send('An error occurred while processing your order'); // send an error response
     }
 }
 

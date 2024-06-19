@@ -17,7 +17,7 @@ var corsOptions = {
     optionsSuccessStatus: 200,
     // origin:true -> if you want to allow requests from all origins
 };
-
+app.use(express.json());
 app.use(cookies);
 app.use(CORS(corsOptions));
 app.use(express.json());
