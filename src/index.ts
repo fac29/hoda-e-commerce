@@ -10,7 +10,7 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-const cookies = cookieParser(process.env.COOKIE_SECRET);
+const cookies = cookieParser('secret');
 
 var corsOptions = {
     origin: ['http://localhost:5173', /^localhost:'/],

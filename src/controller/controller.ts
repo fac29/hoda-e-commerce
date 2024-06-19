@@ -4,6 +4,10 @@ import {
     getProductBySearchTerm,
     listProductsAll,
 } from '../../model/product';
+import { createUser } from '../../model/user';
+import { createSession } from '../../model/session';
+
+const bcyrpt = require('bcrypt');
 
 export function getAllProducts(req: Request, res: Response) {
     try {
@@ -44,5 +48,29 @@ export function login(req: Request, res: Response) {
         //do something
     } catch {
         //do something else
+    }
+}
+
+export function signup(req: Request, res: Response) {
+    const { email, password, username } = req.body;
+
+    if (!email || !password || !username) {
+        res.status(400).send('Bad input');
+    } else {
+        try {
+            bcyrpt.hash(password, 12).then((hash: string) => {
+                const user = createUser(username, email, hash);
+                const sessionId = createSession(user.user_id);
+                res.cookie('sid', sessionId, {
+                    signed: true,
+                    httpOnly: true,
+                    maxAge: 5 * 60 * 1000,
+                    sameSite: 'lax',
+                });
+                res.status(200).send('Cookie Created!');
+            });
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 }
