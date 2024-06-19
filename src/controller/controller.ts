@@ -6,7 +6,7 @@ import {
     addNewOrder,
 } from '../../model/product';
 import { createUser, getUserByEmailAndUsername } from '../../model/user';
-import { createSession } from '../../model/session';
+import { createSession, removeSession } from '../../model/session';
 
 const bcyrpt = require('bcrypt');
 
@@ -96,5 +96,19 @@ export function signup(req: Request, res: Response) {
         } catch (error) {
             res.status(400).send(error);
         }
+    }
+}
+
+export function logout(req: Request, res: Response) {
+    const sid = req.signedCookies.sid;
+    if (!sid) {
+        res.status(400).json({ response: 'No cookie!' });
+    }
+    try {
+        removeSession(sid);
+        res.clearCookie(sid);
+        res.status(200).json({ response: 'Logged out successfully!' });
+    } catch (error) {
+        res.status(400).json({ error: error });
     }
 }
