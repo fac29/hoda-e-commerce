@@ -20,7 +20,6 @@ var corsOptions = {
 app.use(express.json());
 app.use(cookies);
 app.use(CORS(corsOptions));
-app.use(express.json());
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
