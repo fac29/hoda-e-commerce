@@ -32,3 +32,11 @@ export function getSession(sid: Session['sid']) {
     }
     return null;
 }
+
+const delete_session = db.prepare(/*sql*/ `
+    DELETE FROM sessions WHERE session_id = ?
+  `);
+
+export function removeSession(sid: Session['sid']) {
+    return delete_session.run(sid);
+}
