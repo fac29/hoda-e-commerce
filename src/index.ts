@@ -3,6 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import productRouter from './routes/productRouter';
 import signUpRouter from './routes/signupRouter';
+import loginRouter from './routes/loginRouter';
 
 const CORS = require('cors');
 
@@ -27,3 +28,4 @@ app.listen(port, () => {
 
 app.use('/products', productRouter);
 app.use(signUpRouter);
+app.use(loginRouter);
