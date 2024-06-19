@@ -2,7 +2,7 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS users (
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT,
+  username TEXT UNIQUE,
   email TEXT UNIQUE,
   hashed_password TEXT
 );

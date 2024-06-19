@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNewOrder = exports.getProductBySearchTerm = exports.getProductByName = exports.getProductByID = exports.listProductsAll = void 0;
+exports.getProductBySearchTerm = exports.getProductByName = exports.getProductByID = exports.listProductsAll = void 0;
 //import { db } from 'database/db.sqlite';
 const Database = require('better-sqlite3');
 const db = new Database('database/db.sqlite');
@@ -135,45 +135,3 @@ you can seach by any word in
 -category
 */
 // console.log(getProductBySearchTerm('The'));
-const add_new_order = db.prepare(/* sql */ `
-    INSERT INTO orders (user_id) VALUES (?)
-    RETURNING order_id
-`);
-const add_order_item = db.prepare(/* sql */ `
-    INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)
-    RETURNING order_id, product_id, quantity
-`);
-const select_product_from_order = db.prepare(/* sql */ `
-   SELECT product_name, price
-   FROM products
-   WHERE product_id = ?
-`);
-function addNewOrder({ user_id, products }) {
-    const orderId = add_new_order.get(user_id);
-    const orders = products.map((product) => {
-        let order = add_order_item.get(orderId.order_id, product.product_id, product.quantity);
-        const product_info = select_product_from_order.get(product.product_id);
-        order = Object.assign(Object.assign({}, order), product_info);
-        return order;
-    });
-    console.log(JSON.stringify(orders));
-    return `Order #${orderId.order_id} successfully submitted.`;
-}
-exports.addNewOrder = addNewOrder;
-// Test object to check the addNewOrder function works
-// This mimics what will be passed from the frontend - the user_id and array of products ordered
-// which will contain a product_id and quantity
-const newOrder = {
-    user_id: 1,
-    products: [
-        {
-            product_id: 1,
-            quantity: 1,
-        },
-        {
-            product_id: 2,
-            quantity: 1,
-        },
-    ],
-};
-console.log(addNewOrder(newOrder));
