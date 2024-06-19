@@ -18,7 +18,7 @@ export function createUser(
     email: User['email'],
     hashed_password: User['hashed_password']
 ) {
-    return insert_user.run({ username, email, hashed_password });
+    return insert_user.get({ username, email, hashed_password });
 }
 
 const select_user_by_email = db.prepare(`
