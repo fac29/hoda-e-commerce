@@ -51,7 +51,7 @@ export function login(req: Request, res: Response) {
     const { email, password, username } = req.body;
     const user = getUserByEmailAndUsername(email, username);
     if (!email || !password || !user) {
-        return res.status(400).send('Login failed!');
+        return res.status(400).json({ response: 'Login failed!' });
     }
     try {
         bcyrpt
@@ -68,10 +68,10 @@ export function login(req: Request, res: Response) {
                         httpOnly: true,
                     });
                 }
-                res.status(200).send('Logged in!');
+                res.status(200).json({ response: 'Logged in!' });
             });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({ error: error });
     }
 }
 
