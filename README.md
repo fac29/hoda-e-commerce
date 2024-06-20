@@ -90,6 +90,27 @@ Prettier should be installed with other packages upon initialisation and utilise
 
 If the order is successfully submitted you'll receive the following response on Postman: 'Order complete'.
 
+-   `POST /sign-up` - Sign up as a user. Here's an example body you can use on Postman to test this works:
+
+```json
+{
+    "email": "betty@mail.com",
+    "username": "Betty",
+    "password": "d"
+}
+```
+
+-   `POST /login` - Login after creating a user. Here's an example body:
+
+```json
+{
+    "email": "betty@mail.com",
+    "password": "d"
+}
+```
+
+-   `POST /logout` - Logout of the active session
+
 ## Testing
 
 TBC
