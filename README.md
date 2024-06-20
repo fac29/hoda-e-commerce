@@ -72,42 +72,42 @@ Prettier should be installed with other packages upon initialisation and utilise
 -   `GET /products?search=?` - Retrieve a list of products matching search string, e.g. `kill` would return To Kill a Mockingbird.
 -   `POST products/checkout` - Checkout products. Here's a sample request body:
 
-```json
-{
-    "user_id": 3,
-    "products": [
-        {
-            "product_id": 12,
-            "quantity": 100
-        },
-        {
-            "product_id": 11,
-            "quantity": 99
-        }
-    ]
-}
-```
+    ```json
+    {
+        "user_id": 3,
+        "products": [
+            {
+                "product_id": 12,
+                "quantity": 100
+            },
+            {
+                "product_id": 11,
+                "quantity": 99
+            }
+        ]
+    }
+    ```
 
 If the order is successfully submitted you'll receive the following response on Postman: 'Order complete'.
 
 -   `POST /sign-up` - Sign up as a user. Here's an example body you can use on Postman to test this works:
 
-```json
-{
-    "email": "betty@mail.com",
-    "username": "Betty",
-    "password": "d"
-}
-```
+    ```json
+    {
+        "email": "betty@mail.com",
+        "username": "Betty",
+        "password": "d"
+    }
+    ```
 
 -   `POST /login` - Login after creating a user. Here's an example body:
 
-```json
-{
-    "email": "betty@mail.com",
-    "password": "d"
-}
-```
+    ```json
+    {
+        "email": "betty@mail.com",
+        "password": "d"
+    }
+    ```
 
 -   `POST /logout` - Logout of the active session
 
