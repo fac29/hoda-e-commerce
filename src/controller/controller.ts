@@ -5,8 +5,9 @@ import {
     listProductsAll,
     addNewOrder,
 } from '../../model/product';
-import { createUser, getUserByEmailAndUsername } from '../../model/user';
-import { createSession, removeSession } from '../../model/session';
+
+import { createUser, getUserByEmail } from '../../model/user';
+import { createSession } from '../../model/session';
 
 const bcyrpt = require('bcrypt');
 
@@ -48,9 +49,9 @@ export async function checkout(req: Request, res: Response) {
 }
 
 export function login(req: Request, res: Response) {
-    const { email, password, username } = req.body;
-    const user = getUserByEmailAndUsername(email, username);
-    if (!email || !password || !user) {
+    const { email, password } = req.body;
+    const user = getUserByEmail(email);
+    if (!email || !password) {
         return res.status(400).json({ response: 'Login failed!' });
     }
     try {
