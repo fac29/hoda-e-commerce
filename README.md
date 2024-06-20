@@ -69,7 +69,41 @@ Prettier should be installed with other packages upon initialisation and utilise
 
 -   `GET /products/` - Retrieve a list of all products
 -   `GET /products/:id` - Retrieve product by id
--   `GET /products?search=?` - Retrieve a list of products matching search string, e.g. `kill` would return To Kill a Mockingbird.
+-   `GET /products?search=?` - Retrieve a list of products matching search string, e.g. `kill` would return To Kill a Mockingbird:
+    ```json
+    [
+        {
+            "product_id": 2,
+            "product_name": "To Kill a Mockingbird",
+            "product_author": "Harper Lee",
+            "product_description": "A novel by Harper Lee, focusing on racial injustice in the Deep South.",
+            "category": "Classic Literature",
+            "price": 1299,
+            "product_image": "to_kill_a_mockingbird.jpg",
+            "stock": 30,
+            "reviews": [
+                {
+                    "review_id": 4,
+                    "author": "user2",
+                    "rating": 5,
+                    "comment": "Atticus Finch for President!"
+                },
+                {
+                    "review_id": 5,
+                    "author": "user3",
+                    "rating": 4,
+                    "comment": "The courtroom drama was intense!"
+                },
+                {
+                    "review_id": 6,
+                    "author": "user4",
+                    "rating": 5,
+                    "comment": "I want to be Scout when I grow up."
+                }
+            ]
+        }
+    ]
+    ```
 -   `POST products/checkout` - Checkout products. Here's a sample request body:
 
     ```json
