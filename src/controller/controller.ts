@@ -7,7 +7,7 @@ import {
 } from '../../model/product';
 
 import { createUser, getUserByEmail } from '../../model/user';
-import { createSession } from '../../model/session';
+import { createSession, removeSession } from '../../model/session';
 
 const bcyrpt = require('bcrypt');
 
