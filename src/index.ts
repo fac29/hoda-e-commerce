@@ -18,10 +18,12 @@ var corsOptions = {
     origin: true,
     optionsSuccessStatus: 200,
     credentials: true,
+    // origin:true -> if you want to allow requests from all origins
 };
 app.use(express.json());
 app.use(cookies);
 app.use(CORS(corsOptions));
+app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
