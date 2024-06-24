@@ -59,7 +59,7 @@ export function login(req: Request, res: Response) {
             .compare(password, user.hashed_password)
             .then((match: boolean) => {
                 if (!match) {
-                    return res.status(400).send('Login failed!');
+                    return res.status(400).json('Login failed!');
                 } else {
                     const session_id = createSession(user.user_id);
                     res.cookie('sid', session_id, {
@@ -107,7 +107,7 @@ export function logout(req: Request, res: Response) {
     }
     try {
         removeSession(sid);
-        res.clearCookie(sid);
+        res.clearCookie('sid');
         res.status(200).json({ response: 'Logged out successfully!' });
     } catch (error) {
         res.status(400).json({ error: error });
