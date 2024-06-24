@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 const cookies = cookieParser('secret');
 
 var corsOptions = {
-    origin: ['http://localhost:5173', /^localhost:'/],
+    origin: true,
     optionsSuccessStatus: 200,
     credentials: true,
     // origin:true -> if you want to allow requests from all origins
