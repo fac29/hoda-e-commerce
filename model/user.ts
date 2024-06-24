@@ -6,6 +6,8 @@ type User = {
     hashed_password: string;
 };
 
+type UserWithoutPass = Partial<User>;
+
 const insert_user = db.prepare(`
 INSERT INTO users
 (username, email, hashed_password)
