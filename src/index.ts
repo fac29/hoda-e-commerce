@@ -23,7 +23,6 @@ var corsOptions = {
 app.use(express.json());
 app.use(cookies);
 app.use(CORS(corsOptions));
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
