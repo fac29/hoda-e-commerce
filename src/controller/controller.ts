@@ -8,7 +8,7 @@ import {
 
 import { createUser, getUserByEmail, getUserByID } from '../../model/user';
 import { createSession, removeSession, getSession } from '../../model/session';
-import { validateInput } from '../utils/validation';
+import validateInput from '../utils/validation';
 
 const bcyrpt = require('bcrypt');
 

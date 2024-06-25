@@ -61,4 +61,4 @@ async function validateInput(
     return Object.keys(validationErrors).length === 0;
 }
 
-export { validateInput };
+export default validateInput;
