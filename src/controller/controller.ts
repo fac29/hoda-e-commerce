@@ -40,8 +40,8 @@ export function getProductID(req: Request, res: Response) {
 export async function checkout(req: Request, res: Response) {
     try {
         const object = req.body;
-        await addNewOrder(object);
-        res.status(200).send('Order complete'); // send a success response
+        const order = await addNewOrder(object);
+        res.status(200).json({ 'Order complete': order }); // send a success response
     } catch (error) {
         console.error(error); // log the error
         res.status(500).send('An error occurred while processing your order'); // send an error response
