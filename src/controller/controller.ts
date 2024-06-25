@@ -8,6 +8,7 @@ import {
 
 import { createUser, getUserByEmail, getUserByID } from '../../model/user';
 import { createSession, removeSession, getSession } from '../../model/session';
+import { validateInput } from '../utils/validation';
 
 const bcyrpt = require('bcrypt');
 
@@ -83,6 +84,12 @@ export function signup(req: Request, res: Response) {
         res.status(400).json({ response: 'Bad input' });
     } else {
         try {
+            if (!validateInput(email, password, username)) {
+                res.status(400).json({
+                    response: 'Invalid input. Please try again',
+                });
+            }
+
             bcyrpt.hash(password, 12).then((hash: string) => {
                 const user = createUser(username, email, hash);
                 const sessionId = createSession(user.user_id);
