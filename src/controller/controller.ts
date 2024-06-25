@@ -6,8 +6,8 @@ import {
     addNewOrder,
 } from '../../model/product';
 
-import { createUser, getUserByEmail } from '../../model/user';
-import { createSession, removeSession } from '../../model/session';
+import { createUser, getUserByEmail, getUserByID } from '../../model/user';
+import { createSession, removeSession, getSession } from '../../model/session';
 
 const bcyrpt = require('bcrypt');
 
@@ -115,13 +115,30 @@ export function logout(req: Request, res: Response) {
 }
 
 export function user(req: Request, res: Response) {
-    const email = req.params.email;
-    if (!email) {
-        res.status(400).json({ response: 'No email address!' });
+    const userObj = req.params.id;
+    const user_id = parseInt(userObj);
+    if (!user_id) {
+        res.status(400).json({ response: 'No session ID!' });
     }
     try {
-        const data = getUserByEmail(email);
+        const data = getUserByID(user_id);
         res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+}
+
+export function session(req: Request, res: Response) {
+    const sid = req.signedCookies.sid;
+    if (!sid) {
+        return res.status(400).json({ response: 'No cookie!' });
+    }
+    try {
+        if (sid) {
+            const data = getSession(sid);
+            const userID = data['user_id'];
+            res.status(200).json({ user_id: userID });
+        } else throw new Error('No cookie!');
     } catch (error) {
         res.status(400).json({ error: error });
     }
