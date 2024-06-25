@@ -49,11 +49,17 @@ export async function checkout(req: Request, res: Response) {
     }
 }
 
-export function login(req: Request, res: Response) {
+export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
+    const validInput = await validateInput(email, password);
     const user = getUserByEmail(email);
     if (!email || !password) {
         return res.status(400).json({ response: 'Login failed!' });
+    }
+    if (!validInput) {
+        return res.status(400).json({
+            response: 'Invalid input. Please try again',
+        });
     }
     try {
         bcyrpt
@@ -77,19 +83,18 @@ export function login(req: Request, res: Response) {
     }
 }
 
-export function signup(req: Request, res: Response) {
+export async function signup(req: Request, res: Response) {
     const { email, password, username } = req.body;
+    const validInput = await validateInput(email, password, username);
 
     if (!email || !password || !username) {
-        res.status(400).json({ response: 'Bad input' });
+        return res.status(400).json({ response: 'Bad input' });
+    } else if (!validInput) {
+        return res.status(400).json({
+            response: 'Invalid input. Please try again',
+        });
     } else {
         try {
-            if (!validateInput(email, password, username)) {
-                res.status(400).json({
-                    response: 'Invalid input. Please try again',
-                });
-            }
-
             bcyrpt.hash(password, 12).then((hash: string) => {
                 const user = createUser(username, email, hash);
                 const sessionId = createSession(user.user_id);
