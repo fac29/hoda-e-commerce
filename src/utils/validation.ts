@@ -30,11 +30,11 @@ async function validateInput(
         password?: string;
     } = {};
 
-    // check email is valid
+    // check email is valid (in case the POST request bypasses FE checks)
     if (!validateEmail(email)) {
         validationErrors.email = 'Please enter a valid email address';
     }
-    // check password is valid (at least 8 characters)
+    // check password is valid (at least 8 characters) (in case the POST request bypasses FE checks)
     if (!validatePassword(password)) {
         validationErrors.password =
             'Passwords must be at least 8 characters long';
