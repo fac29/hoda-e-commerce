@@ -51,7 +51,7 @@ export async function checkout(req: Request, res: Response) {
 
 export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
-    const validInput = await validateInput(email, password);
+    const validInput = await validateInput('login', email, password);
     const user = getUserByEmail(email);
     if (!email || !password) {
         return res.status(400).json({ response: 'Login failed!' });
@@ -85,7 +85,7 @@ export async function login(req: Request, res: Response) {
 
 export async function signup(req: Request, res: Response) {
     const { email, password, username } = req.body;
-    const validInput = await validateInput(email, password, username);
+    const validInput = await validateInput('signup', email, password, username);
 
     if (!email || !password || !username) {
         return res.status(400).json({ response: 'Bad input' });

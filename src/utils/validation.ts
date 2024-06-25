@@ -20,6 +20,7 @@ function validatePassword(password: string) {
 }
 
 async function validateInput(
+    type: 'signup' | 'login',
     email: string,
     password: string,
     username?: string
@@ -43,19 +44,28 @@ async function validateInput(
     // if (email === '' || password === '' || username === '') {
     //     return false;
     // }
-    // check username doesn't already exist on database
+
     if (username) {
         const userExists = await usernameExists(username);
-        userExists
-            ? (validationErrors.username = 'Username already exists')
-            : '';
+        if (type === 'signup') {
+            // check username doesn't already exist on database for signup
+            userExists
+                ? (validationErrors.username = 'Username already exists')
+                : '';
+        }
     }
-    // check email address doesn't already exist on database
     if (email) {
         const emailAddressExists = await emailExists(email);
-        emailAddressExists
-            ? (validationErrors.email = 'Email address already exists')
-            : '';
+        if (type === 'signup') {
+            // check email address doesn't already exist on database for signup
+            emailAddressExists
+                ? (validationErrors.email = 'Email address already exists')
+                : '';
+        } else if (type === 'login') {
+            emailAddressExists
+                ? ''
+                : (validationErrors.email = 'Email address does not exist');
+        }
     }
 
     return Object.keys(validationErrors).length === 0;
