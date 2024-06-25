@@ -5,6 +5,8 @@ import productRouter from './routes/productRouter';
 import signUpRouter from './routes/signupRouter';
 import loginRouter from './routes/loginRouter';
 import logoutRouter from './routes/logoutRouter';
+import userRouter from './routes/userRouter';
+import sessionRouter from './routes/sessionRouter';
 
 const CORS = require('cors');
 
@@ -33,3 +35,5 @@ app.use('/products', productRouter);
 app.use(signUpRouter);
 app.use(loginRouter);
 app.use(logoutRouter);
+app.use(userRouter);
+app.use(sessionRouter);
