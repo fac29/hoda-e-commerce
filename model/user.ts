@@ -31,6 +31,14 @@ export function getUserByEmail(email: User['email']) {
     return select_user_by_email.get(email);
 }
 
+const select_user_by_username = db.prepare(/* sql */ `
+        SELECT user_id, email, username FROM users WHERE username = ?
+    `);
+
+export function getUserByUsername(username: User['username']) {
+    return select_user_by_username.get(username);
+}
+
 const select_user_by_id = db.prepare(/* sql */ `
     SELECT user_id, username FROM users WHERE user_id = ?
     `);
