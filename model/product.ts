@@ -29,6 +29,8 @@ type ProductsWithReviews = ProductWithReviews[];
 
 type OrderItem = {
     product_id: number;
+    product_name: string;
+    price: number;
     quantity: number;
 };
 
@@ -207,11 +209,11 @@ const add_order_item = db.prepare(/* sql */ `
     RETURNING order_id, product_id, quantity
 `);
 
-const select_product_from_order = db.prepare(/* sql */ `
-   SELECT product_name, price
-   FROM products
-   WHERE product_id = ?
-`);
+// const select_product_from_order = db.prepare(/* sql */ `
+//    SELECT product_name, price
+//    FROM products
+//    WHERE product_id = ?
+// `);
 
 export function addNewOrder({ user_id, products }: Order) {
     const orderId: OrderId = add_new_order.get(user_id);
@@ -222,16 +224,32 @@ export function addNewOrder({ user_id, products }: Order) {
             product.quantity
         );
 
-        const product_info = select_product_from_order.get(product.product_id);
+        order.product_name = product.product_name;
+        order.price = product.price;
 
-        order = { ...order, ...product_info };
         return order;
     });
     console.log(JSON.stringify(orders));
     return `Order #${orderId.order_id} successfully submitted.`;
 }
 
-// Test object to check the addNewOrder function works
-// This mimics what will be passed from the frontend - the user_id and array of products ordered
-// which will contain a product_id and quantity
+//Test object
+// const newOrder = {
+//     user_id: 1,
+//     products: [
+//         {
+//             product_id: 1,
+//             product_name: 'The Great Gatsby',
+//             price: 1099,
+//             quantity: 1,
+//         },
+//         {
+//             product_id: 2,
+//             product_name: 'To Kill a Mockingbird',
+//             price: 1299,
+//             quantity: 1,
+//         },
+//     ],
+// };
 
+// console.log(addNewOrder(newOrder));
