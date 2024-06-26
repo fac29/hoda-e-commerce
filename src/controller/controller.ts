@@ -45,7 +45,9 @@ export async function checkout(req: Request, res: Response) {
         res.status(200).json({ 'Order complete': order }); // send a success response
     } catch (error) {
         console.error(error); // log the error
-        res.status(500).send('An error occurred while processing your order'); // send an error response
+        res.status(500).send({
+            response: 'An error occurred while processing your order',
+        }); // send an error response
     }
 }
 
