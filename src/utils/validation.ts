@@ -1,9 +1,15 @@
 import { getUserByEmail, getUserByUsername } from '../../model/user';
 async function usernameExists(username: string) {
+    if ((username = '')) {
+        return false;
+    }
     const user = await getUserByUsername(username);
     return user ? true : false;
 }
 async function emailExists(email: string) {
+    if ((email = '')) {
+        return false;
+    }
     const userEmail = await getUserByEmail(email);
     return userEmail ? true : false;
 }

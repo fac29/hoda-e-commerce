@@ -7,6 +7,7 @@ import loginRouter from './routes/loginRouter';
 import logoutRouter from './routes/logoutRouter';
 import userRouter from './routes/userRouter';
 import sessionRouter from './routes/sessionRouter';
+import checkoutRouter from './routes/checkoutRouter';
 
 const CORS = require('cors');
 
@@ -37,3 +38,4 @@ app.use(loginRouter);
 app.use(logoutRouter);
 app.use(userRouter);
 app.use(sessionRouter);
+app.use(checkoutRouter);

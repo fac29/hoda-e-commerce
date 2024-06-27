@@ -29,11 +29,14 @@ type ProductsWithReviews = ProductWithReviews[];
 
 type OrderItem = {
     product_id: number;
+    product_name: string;
+    price: number;
     quantity: number;
 };
 
 type Order = {
     user_id: number;
+    order_id?: number;
     products: OrderItem[];
 };
 
@@ -204,34 +207,49 @@ const add_new_order = db.prepare(/* sql */ `
 
 const add_order_item = db.prepare(/* sql */ `
     INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)
-    RETURNING order_id, product_id, quantity
-`);
-
-const select_product_from_order = db.prepare(/* sql */ `
-   SELECT product_name, price
-   FROM products
-   WHERE product_id = ?
+    RETURNING product_id, quantity
 `);
 
 export function addNewOrder({ user_id, products }: Order) {
     const orderId: OrderId = add_new_order.get(user_id);
-    const orders: Order[] = products.map((product) => {
-        let order = add_order_item.get(
+    const order: Order = {
+        user_id: user_id,
+        order_id: 0,
+        products: [],
+    };
+    order.order_id = orderId.order_id;
+    for (const product of products) {
+        let orderItem = add_order_item.get(
             orderId.order_id,
             product.product_id,
             product.quantity
         );
 
-        const product_info = select_product_from_order.get(product.product_id);
+        orderItem.product_name = product.product_name;
+        orderItem.price = product.price;
 
-        order = { ...order, ...product_info };
-        return order;
-    });
-    console.log(JSON.stringify(orders));
-    return `Order #${orderId.order_id} successfully submitted.`;
+        order.products.push(orderItem);
+    }
+    return order;
 }
 
-// Test object to check the addNewOrder function works
-// This mimics what will be passed from the frontend - the user_id and array of products ordered
-// which will contain a product_id and quantity
+//Test object
+// const newOrder = {
+//     user_id: 1,
+//     products: [
+//         {
+//             product_id: 1,
+//             product_name: 'The Great Gatsby',
+//             price: 1099,
+//             quantity: 1,
+//         },
+//         {
+//             product_id: 2,
+//             product_name: 'To Kill a Mockingbird',
+//             price: 1299,
+//             quantity: 1,
+//         },
+//     ],
+// };
 
+// console.log(addNewOrder(newOrder));
