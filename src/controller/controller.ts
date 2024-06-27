@@ -90,9 +90,7 @@ export async function signup(req: Request, res: Response) {
     if (!email || !password || !username) {
         return res.status(400).json({ response: 'Bad input' });
     } else if (!validInput) {
-        return res.status(400).json({
-            response: 'Invalid input. Please try again',
-        });
+        return res.status(400).json(validInput);
     } else {
         try {
             bcyrpt.hash(password, 12).then((hash: string) => {

@@ -30,14 +30,7 @@ async function validateInput(
     email: string,
     password: string,
     username?: string
-): Promise<{
-    isValid: boolean;
-    errors: {
-        username?: string | undefined;
-        email?: string | undefined;
-        password?: string | undefined;
-    };
-}> {
+) {
     const validationErrors: {
         username?: string;
         email?: string;
@@ -61,6 +54,7 @@ async function validateInput(
         if (await emailExists(email)) {
             validationErrors.email = 'Email address already exists';
         }
+        return validationErrors;
     }
 
     // Validation for login
@@ -71,6 +65,7 @@ async function validateInput(
         if (!(await emailExists(email))) {
             validationErrors.email = 'Email address does not exist';
         }
+        return validationErrors;
     }
 
     // Determine if the input is valid based on whether there are any errors
