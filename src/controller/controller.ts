@@ -79,7 +79,7 @@ export async function login(req: Request, res: Response) {
                         httpOnly: true,
                     });
                 }
-                res.status(200).json({ response: 'Logged in!' });
+                return res.status(200).json({ response: 'Logged in!' });
             });
     } catch (error) {
         res.status(400).json({ error: error });
@@ -107,7 +107,7 @@ export async function signup(req: Request, res: Response) {
                     maxAge: 5 * 60 * 1000,
                     sameSite: 'lax',
                 });
-                res.status(200).json({ response: 'Cookie Created!' });
+                return res.status(200).json({ response: 'Cookie Created!' });
             });
         } catch (error) {
             res.status(400).send(error);
@@ -152,7 +152,7 @@ export function session(req: Request, res: Response) {
         if (sid) {
             const data = getSession(sid);
             const userID = data['user_id'];
-            res.status(200).json({ user_id: userID });
+            return res.status(200).json({ user_id: userID });
         } else throw new Error('No cookie!');
     } catch (error) {
         res.status(400).json({ error: error });
