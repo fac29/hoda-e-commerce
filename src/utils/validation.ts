@@ -1,5 +1,4 @@
 import { getUserByEmail, getUserByUsername } from '../../model/user';
-
 async function usernameExists(username: string) {
     if ((username = '')) {
         return false;
@@ -7,7 +6,6 @@ async function usernameExists(username: string) {
     const user = await getUserByUsername(username);
     return user ? true : false;
 }
-
 async function emailExists(email: string) {
     if ((email = '')) {
         return false;
@@ -15,12 +13,10 @@ async function emailExists(email: string) {
     const userEmail = await getUserByEmail(email);
     return userEmail ? true : false;
 }
-
 function validateEmail(email: string) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
 }
-
 function validatePassword(password: string) {
     return password.length >= 8;
 }
@@ -30,54 +26,52 @@ async function validateInput(
     email: string,
     password: string,
     username?: string
-): Promise<{
-    isValid: boolean;
-    errors: {
-        username?: string | undefined;
-        email?: string | undefined;
-        password?: string | undefined;
-    };
-}> {
+) {
     const validationErrors: {
         username?: string;
         email?: string;
         password?: string;
     } = {};
+    // check email is valid (in case the POST request bypasses FE checks)
+    if (!validateEmail(email)) {
+        validationErrors.email = 'Please enter a valid email address';
+    }
+    // check password is valid (at least 8 characters) (in case the POST request bypasses FE checks)
+    if (!validatePassword(password)) {
+        validationErrors.password =
+            'Passwords must be at least 8 characters long';
+    }
+    // don't allow empty strings - think this is covered in controller
+    // if (email === '' || password === '' || username === '') {
+    //     return false;
+    // }
+    // check username doesn't already exist on database
 
-    // Validation for signup
-    if (type === 'signup') {
-        if (!validateEmail(email)) {
-            validationErrors.email = 'Please enter a valid email address';
+    if (username) {
+        const userExists = await usernameExists(username);
+        if (type === 'signup') {
+            // check username doesn't already exist on database for signup
+            userExists
+                ? (validationErrors.username = 'Username already exists')
+                : '';
         }
-        if (!validatePassword(password)) {
-            validationErrors.password =
-                'Passwords must be at least 8 characters long';
-        }
-        if (!username) {
-            validationErrors.username = 'Username is required';
-        } else if (await usernameExists(username)) {
-            validationErrors.username = 'Username already exists';
-        }
-        if (await emailExists(email)) {
-            validationErrors.email = 'Email address already exists';
+    }
+    // check email address doesn't already exist on database
+    if (email) {
+        const emailAddressExists = await emailExists(email);
+        if (type === 'signup') {
+            // check email address doesn't already exist on database for signup
+            emailAddressExists
+                ? (validationErrors.email = 'Email address already exists')
+                : '';
+        } else if (type === 'login') {
+            emailAddressExists
+                ? ''
+                : (validationErrors.email = 'Email address does not exist');
         }
     }
 
-    // Validation for login
-    if (type === 'login') {
-        if (!validateEmail(email)) {
-            validationErrors.email = 'Please enter a valid email address';
-        }
-        if (!(await emailExists(email))) {
-            validationErrors.email = 'Email address does not exist';
-        }
-    }
-
-    // Determine if the input is valid based on whether there are any errors
     const isValid = Object.keys(validationErrors).length === 0;
-
-    // Return the validation result
-    return { isValid, errors: validationErrors };
+    return isValid;
 }
-
 export default validateInput;
