@@ -1,20 +1,16 @@
 import { getUserByEmail, getUserByUsername } from '../../model/user';
-
 async function usernameExists(username: string) {
     const user = await getUserByUsername(username);
     return user ? true : false;
 }
-
 async function emailExists(email: string) {
     const userEmail = await getUserByEmail(email);
     return userEmail ? true : false;
 }
-
 function validateEmail(email: string) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
 }
-
 function validatePassword(password: string) {
     return password.length >= 8;
 }
@@ -30,7 +26,6 @@ async function validateInput(
         email?: string;
         password?: string;
     } = {};
-
     // check email is valid (in case the POST request bypasses FE checks)
     if (!validateEmail(email)) {
         validationErrors.email = 'Please enter a valid email address';
@@ -44,6 +39,7 @@ async function validateInput(
     // if (email === '' || password === '' || username === '') {
     //     return false;
     // }
+    // check username doesn't already exist on database
 
     if (username) {
         const userExists = await usernameExists(username);
@@ -54,6 +50,7 @@ async function validateInput(
                 : '';
         }
     }
+    // check email address doesn't already exist on database
     if (email) {
         const emailAddressExists = await emailExists(email);
         if (type === 'signup') {
@@ -68,7 +65,7 @@ async function validateInput(
         }
     }
 
-    return Object.keys(validationErrors).length === 0;
+    const isValid = Object.keys(validationErrors).length === 0;
+    return isValid;
 }
-
 export default validateInput;
